@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Container from "./components/listContainer";
+import axios from "axios";
 
 class App extends React.Component {
   constructor(props) {
@@ -9,11 +10,22 @@ class App extends React.Component {
       todos: []
     };
   }
+  componentDidMount() {
+    axios({
+      method: "get",
+      url: "https://jsonplaceholder.typicode.com/todos"
+    }).then(response => {
+      // console.log(response.data);
+      this.setState({
+        todos: response.data
+      });
+    });
+  }
   render() {
     return (
       <div>
         I'm so lonely without anything to complete
-        <Container />
+        <Container todos={this.state.todos} />
       </div>
     );
   }

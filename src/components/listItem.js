@@ -1,8 +1,8 @@
 import React from "react";
 
 function ListItems(props) {
+  // console.log(props.todos);
   const todosFromApi = props.todos;
-  // console.log(todosFromApi);
   const todoItems = todosFromApi.map(todo => (
     <li key={todo.id}>{todo.title}</li>
   ));

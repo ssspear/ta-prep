@@ -7,15 +7,18 @@ const connection = mysql.createConnection({
   database: "todos"
 });
 
-const getTodos = connection.query("SELECT * FROM todos", function(
-  err,
-  results,
-  fields
-) {
-  if (err) {
-    console.log("Error in select all database query");
-  }
-  console.log(results);
-});
+const getTodos = function(callback) {
+  connection.query("SELECT * FROM todos", callback);
+};
 
-export default getTodos;
+const saveTodos = function(body, callback) {
+  // console.log(body);
+  connection.query(
+    `INSERT INTO todos (name, username) VALUES ('${body.name}', '${
+      body.username
+    }')`,
+    callback
+  );
+};
+
+module.exports = { connection, getTodos, saveTodos };

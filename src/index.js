@@ -11,7 +11,6 @@ class App extends React.Component {
       todos: [],
       text: ""
     };
-
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -20,12 +19,16 @@ class App extends React.Component {
     axios({
       method: "get",
       url: "https://jsonplaceholder.typicode.com/todos"
-    }).then(response => {
-      // console.log(response.data);
-      this.setState({
-        todos: response.data.slice(0, 26)
+    })
+      .then(response => {
+        // console.log(response.data);
+        this.setState({
+          todos: response.data.slice(0, 26)
+        });
+      })
+      .catch(err => {
+        console.log(err);
       });
-    });
   }
 
   handleChange(event) {
@@ -36,8 +39,19 @@ class App extends React.Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
     // console.log(event);
+    event.preventDefault();
+    // this.setState({
+    //   todos: this.state.todos.concat([this.state.text])
+    // });
+    axios
+      .get("/todos")
+      .then(response => {
+        console.log("You did it!", response);
+      })
+      .catch(error => {
+        console.log("Error in handle submit get reqest", error);
+      });
   }
 
   render() {
